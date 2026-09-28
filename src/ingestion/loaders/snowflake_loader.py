@@ -48,6 +48,14 @@ def carregar_carga(conn, arquivo: Path):
 
     df = df[colunas]
 
+    df["din_instante"] = pd.to_datetime(
+        df["din_instante"]
+    ).dt.strftime("%Y-%m-%d %H:%M:%S")
+
+    df["DATA_INGESTAO"] = pd.Timestamp.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
+
     dados = list(df.itertuples(index=False, name=None))
 
     sql = """
@@ -60,13 +68,29 @@ def carregar_carga(conn, arquivo: Path):
             FONTE,
             ANO_REFERENCIA
         )
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (
+            %s,%s,
+            TO_TIMESTAMP_NTZ(%s),
+            %s,
+            TO_TIMESTAMP_NTZ(%s),
+            %s,
+            %s
+        )
+    """
+
+    #Idempotent load: deleta os dados existentes para o ano de referência antes de inserir os novos dados
+    delete_sql = """
+        DELETE FROM ENERGY_DB.RAW.CURVA_CARGA
+        WHERE ANO_REFERENCIA = %s
     """
 
     cursor = conn.cursor()
 
     try:
+        cursor.execute(delete_sql, (ano,))
+
         cursor.executemany(sql, dados)
+
         conn.commit()
 
         print(f"[OK] {len(dados):,} registros carregados.")
@@ -82,9 +106,10 @@ def carregar_balanco(conn, arquivo: Path):
 
     ano = int(arquivo.stem.split("_")[-1])
 
-    data_ingestao = datetime.now()
+    df["DATA_INGESTAO"] = pd.Timestamp.now().strftime(
+        "%Y-%m-%d %H:%M:%S"
+    )
 
-    df["DATA_INGESTAO"] = data_ingestao
     df["FONTE"] = "ONS"
     df["ANO_REFERENCIA"] = ano
 
@@ -105,6 +130,11 @@ def carregar_balanco(conn, arquivo: Path):
 
     df = df[colunas]
 
+    # Converter timestamp para string para o Snowflake Connector
+    df["din_instante"] = pd.to_datetime(
+        df["din_instante"]
+    ).dt.strftime("%Y-%m-%d %H:%M:%S")
+
     dados = list(df.itertuples(index=False, name=None))
 
     sql = """
@@ -123,15 +153,34 @@ def carregar_balanco(conn, arquivo: Path):
             ANO_REFERENCIA
         )
         VALUES (
-            %s, %s, %s, %s, %s, %s,
-            %s, %s, %s, %s, %s, %s
+            %s,
+            %s,
+            TO_TIMESTAMP_NTZ(%s),
+            %s,
+            %s,
+            %s,
+            %s,
+            %s,
+            %s,
+            TO_TIMESTAMP_NTZ(%s),
+            %s,
+            %s
         )
+    """
+
+    delete_sql = """
+        DELETE FROM ENERGY_DB.RAW.BALANCO_ENERGIA
+        WHERE ANO_REFERENCIA = %s
     """
 
     cursor = conn.cursor()
 
     try:
+        # Garante idempotência por ano
+        cursor.execute(delete_sql, (ano,))
+
         cursor.executemany(sql, dados)
+
         conn.commit()
 
         print(f"[OK] {len(dados):,} registros carregados.")
@@ -174,4 +223,24 @@ def testar_conexao():
         conn.close()
 
 if __name__ == "__main__":
-    testar_conexao()
+
+    pasta_carga = (
+        BASE_DIR
+        / "data"
+        / "raw"
+        / "ons"
+        / "carga"
+    )
+
+    arquivos = sorted(pasta_carga.glob("carga_*.parquet"))
+
+    print(f"Arquivos encontrados: {len(arquivos)}")
+
+    conn = conectar_snowflake()
+
+    try:
+        for arquivo in arquivos:
+            carregar_carga(conn, arquivo)
+
+    finally:
+        conn.close()
