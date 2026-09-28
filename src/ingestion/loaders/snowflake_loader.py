@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parents[2]
+BASE_DIR = Path(__file__).resolve().parents[3]
 
 CONN_CONFIG = {
     "account": os.getenv("SNOWFLAKE_ACCOUNT"),

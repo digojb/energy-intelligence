@@ -9,8 +9,8 @@ __pycache__/
 .env
 
 # Data
-src/data/raw/*
-src/data/processed/*
+data/raw/*
+data/processed/*
 
 # IDE
 .vscode/
