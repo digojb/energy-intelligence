@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw
+    database: ENERGY_DB
+    schema: RAW
+
+    tables:
+      - name: CURVA_CARGA
+      - name: BALANCO_ENERGIA
+
