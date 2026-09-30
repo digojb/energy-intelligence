@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_curva_carga
+    description: "Dados horários de carga dos subsistemas do SIN."
+
+    columns:
+      - name: id_subsistema
+        description: "Identificador do subsistema."
+        tests:
+          - not_null
+
+      - name: nome_subsistema
+        description: "Nome do subsistema."
+        tests:
+          - not_null
+
+      - name: instante
+        description: "Instante da medição."
+        tests:
+          - not_null
+
+      - name: carga_mwmed
+        description: "Carga de energia horária média em MWmed."
+        tests:
+          - not_null
+
+      - name: ano_referencia
+        description: "Ano de referência do dado."
+        tests:
+          - not_null

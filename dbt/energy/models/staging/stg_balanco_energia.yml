@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_balanco_energia
+    description: "Balanço horário de energia dos subsistemas do SIN."
+
+    columns:
+      - name: id_subsistema
+        description: "Identificador do subsistema."
+        tests:
+          - not_null
+
+      - name: nome_subsistema
+        description: "Nome do subsistema."
+        tests:
+          - not_null
+
+      - name: instante
+        description: "Instante da medição."
+        tests:
+          - not_null
+
+      - name: geracao_hidraulica_mwmed
+        description: "Geração hidráulica em MWmed."
+        tests:
+          - not_null
+
+      - name: geracao_termica_mwmed
+        description: "Geração térmica em MWmed."
+        tests:
+          - not_null
+
+      - name: geracao_eolica_mwmed
+        description: "Geração eólica em MWmed."
+        tests:
+          - not_null
+
+      - name: geracao_solar_mwmed
+        description: "Geração solar em MWmed."
+        tests:
+          - not_null
+
+      - name: carga_mwmed
+        description: "Carga em MWmed."
+        tests:
+          - not_null
+
+      - name: intercambio_mwmed
+        description: "Intercâmbio de energia em MWmed."
+        tests:
+          - not_null
+
+      - name: ano_referencia
+        description: "Ano de referência do dado."
+        tests:
+          - not_null
