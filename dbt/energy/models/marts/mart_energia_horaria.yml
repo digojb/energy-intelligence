@@ -1,0 +1,40 @@
+
+version: 2
+
+models:
+  - name: mart_energia_horaria
+    description: >
+      Modelo analítico horário por subsistema, com carga,
+      geração por fonte, geração total calculada e participação
+      percentual das fontes eólica e solar.
+
+    columns:
+      - name: id_subsistema
+        description: "Identificador do subsistema."
+        tests:
+          - not_null
+
+      - name: instante
+        description: "Instante da medição."
+        tests:
+          - not_null
+
+      - name: data
+        description: "Data da medição."
+        tests:
+          - not_null
+
+      - name: carga_mwmed
+        description: "Carga horária média em MWmed."
+        tests:
+          - not_null
+
+      - name: geracao_total_mwmed
+        description: "Soma das quatro fontes de geração disponíveis."
+        tests:
+          - not_null
+
+      - name: ano_referencia
+        description: "Ano de referência do dado."
+        tests:
+          - not_null
