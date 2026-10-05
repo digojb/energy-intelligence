@@ -1,0 +1,55 @@
+version: 2
+
+models:
+  - name: int_balanco_carga_horaria
+
+    description: >
+      Consolidação horária das informações de carga e balanço energético
+      dos subsistemas do SIN. O modelo relaciona os dados da curva de
+      carga com os dados de geração e intercâmbio, excluindo o agregado SIN.
+
+    columns:
+
+      - name: id_subsistema
+        description: "Identificador do subsistema."
+        tests:
+          - not_null
+
+      - name: nome_subsistema
+        description: "Nome do subsistema."
+        tests:
+          - not_null
+
+      - name: instante
+        description: "Instante da medição."
+        tests:
+          - not_null
+
+      - name: carga_mwmed
+        description: "Carga horária proveniente da curva de carga."
+        tests:
+          - not_null
+
+      - name: geracao_hidraulica_mwmed
+        description: "Geração hidráulica horária em MWmed."
+
+      - name: geracao_termica_mwmed
+        description: "Geração térmica horária em MWmed."
+
+      - name: geracao_eolica_mwmed
+        description: "Geração eólica horária em MWmed."
+
+      - name: geracao_solar_mwmed
+        description: "Geração solar horária em MWmed."
+
+      - name: carga_balanco_mwmed
+        description: "Carga horária registrada no balanço energético."
+
+      - name: intercambio_mwmed
+        description: "Intercâmbio horário do subsistema."
+
+      - name: data_ingestao
+        description: "Data e hora da ingestão do dado de carga."
+
+      - name: ano_referencia
+        description: "Ano de referência do dado."
