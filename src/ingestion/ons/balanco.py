@@ -265,6 +265,8 @@ def validate_balanco(df: pd.DataFrame):
     # Valores negativos
     # --------------------------------------------------------
 
+    TOLERANCIA_GERACAO = -1.0
+
     # Geração e carga não devem ser negativas.
     colunas_nao_negativas = [
         "val_gerhidraulica",
@@ -276,15 +278,17 @@ def validate_balanco(df: pd.DataFrame):
 
     for coluna in colunas_nao_negativas:
 
-        negativos = (
-            df[coluna] < 0
+        valores_invalidos = (
+            df[coluna] < TOLERANCIA_GERACAO
         ).sum()
 
-        if negativos > 0:
+        quantidade_invalidos = valores_invalidos.sum()
 
+        if quantidade_invalidos > 0:
             raise ValueError(
                 f"{coluna} possui "
-                f"{negativos} valores negativos."
+                f"{quantidade_invalidos} valores abaixo da "
+                f"tolerância de {TOLERANCIA_GERACAO} MWmed."
             )
 
     # --------------------------------------------------------

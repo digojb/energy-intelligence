@@ -1,0 +1,30 @@
+[0m19:50:16.735203 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F6E02E270>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F70783ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F70783B10>]}
+
+
+============================== 19:50:16.740419 | 7a9cc989-f90d-44f8-86df-e39e9af3608f ==============================
+[0m19:50:16.740419 [info ] [MainThread]: Running with dbt=1.12.5
+[0m19:50:16.741067 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\diogojb\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt run', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'logs'}
+[0m19:50:16.741952 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\diogojb\Desktop\energy-intelligence\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m19:50:16.743062 [debug] [MainThread]: Command `python -m dbt.cli.main run` failed at 19:50:16.742665 after 0.12 seconds
+[0m19:50:16.743375 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F70792780>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F707BD6D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000019F7078BF00>]}
+[0m19:50:16.743675 [debug] [MainThread]: Flushing usage events
+[0m19:50:17.470736 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m19:50:22.196960 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617C16E270>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617E8C3ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617E8C3B10>]}
+
+
+============================== 19:50:22.200533 | 4b8c7000-2929-48c8-8b95-fc5a20a90a78 ==============================
+[0m19:50:22.200533 [info ] [MainThread]: Running with dbt=1.12.5
+[0m19:50:22.201139 [debug] [MainThread]: running dbt with arguments {'maximum_seed_size_mib': '1', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'version_check': 'True', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\diogojb\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'invocation_command': 'dbt run', 'hints_enabled': 'True', 'indirect_selection': 'eager', 'use_experimental_parser': 'False', 'use_colors': 'True', 'log_path': 'logs'}
+[0m19:50:22.201670 [error] [MainThread]: [[31mERROR[0m]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\diogojb\Desktop\energy-intelligence\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m19:50:22.202528 [debug] [MainThread]: Command `python -m dbt.cli.main run` failed at 19:50:22.202421 after 0.13 seconds
+[0m19:50:22.202834 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617E8D2780>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617E8FD6D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002617E8CBF00>]}
+[0m19:50:22.203142 [debug] [MainThread]: Flushing usage events
+[0m19:50:22.857088 [debug] [MainThread]: An error was encountered while trying to flush usage events
