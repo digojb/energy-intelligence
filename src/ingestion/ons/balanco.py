@@ -8,7 +8,7 @@ import requests
 URL_TEMPLATE = (
     "https://ons-aws-prod-opendata.s3.amazonaws.com/"
     "dataset/balanco_energia_subsistema_ho/"
-    "BALANCO_ENERGIA_SUBSISTEMA_{year}.parquet"
+    "BALANCO_ENERGIA_SUBSISTEMA_{year}.parquet" 
 )
 
 BASE_DIR = Path(__file__).resolve().parents[3]
