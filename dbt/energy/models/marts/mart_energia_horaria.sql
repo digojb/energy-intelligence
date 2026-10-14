@@ -1,4 +1,3 @@
-
 WITH base AS (
 
     SELECT
@@ -56,11 +55,11 @@ SELECT
 
     intercambio_mwmed,
 
-    geracao_eolica_mwmed
+    GREATEST(geracao_eolica_mwmed, 0)
         / NULLIF(geracao_total_mwmed, 0)
         * 100 AS participacao_eolica_pct,
 
-    geracao_solar_mwmed
+    GREATEST(geracao_solar_mwmed, 0)
         / NULLIF(geracao_total_mwmed, 0)
         * 100 AS participacao_solar_pct,
 
