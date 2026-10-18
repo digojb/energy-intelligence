@@ -1,0 +1,13 @@
+energy:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
+      role: ENERGY_DBT
+      database: "{{ env_var('ENERGY_DB') }}"
+      warehouse: "{{ env_var('ENERGY_WAREHOUSE') }}"
+      schema: "{{ env_var('ENERGY_SCHEMA') }}"
+      threads: 4

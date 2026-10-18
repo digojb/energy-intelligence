@@ -2,7 +2,7 @@
 import sys
 from pathlib import Path
 from datetime import datetime
-
+import subprocess
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 
@@ -69,7 +69,34 @@ def carregar_balanco_snowflake():
     finally:
         conn.close()
 
+def executar_dbt_build():
+    comando = [
+        sys.executable,
+        "-m",
+        "dbt.cli.main",
+        "build",
+        "--project-dir",
+        "/opt/airflow/dbt/energy",
+        "--profiles-dir",
+        "/opt/airflow/dbt_profiles",
+    ]
 
+    resultado = subprocess.run(
+        comando,
+        capture_output=True,
+        text=True,
+    )
+
+    print(resultado.stdout)
+
+    if resultado.stderr:
+        print(resultado.stderr)
+
+    if resultado.returncode != 0:
+        raise RuntimeError(
+            f"dbt build falhou com código {resultado.returncode}"
+        )
+    
 with DAG(
     dag_id="energy_pipeline",
     start_date=datetime(2026, 1, 1),
@@ -98,5 +125,12 @@ with DAG(
         python_callable=carregar_balanco_snowflake,
     )
 
+    dbt_build_task = PythonOperator(
+        task_id="dbt_build",
+        python_callable=executar_dbt_build,
+    )
+
     ingest_carga_task >> load_carga_task
     ingest_balanco_task >> load_balanco_task
+
+    [load_carga_task, load_balanco_task] >> dbt_build_task

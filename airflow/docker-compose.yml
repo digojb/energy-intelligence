@@ -10,7 +10,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   airflow:
-    image: apache/airflow:3.1.0
+    build: .
+    image: energy-airflow:3.1.0
     depends_on:
       - postgres
     env_file:
@@ -24,6 +25,8 @@ services:
       - ./plugins:/opt/airflow/plugins
       - ../src:/opt/airflow/src
       - ../data:/opt/airflow/data
+      - ../dbt:/opt/airflow/dbt
+      - ./dbt_profiles:/opt/airflow/dbt_profiles:ro
     ports:
       - "8080:8080"
     command: standalone
