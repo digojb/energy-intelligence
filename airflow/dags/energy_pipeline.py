@@ -16,7 +16,7 @@ from ingestion.loaders.snowflake_loader import (
     carregar_balanco,
 )
 
-ANO_REFERENCIA = 2026
+ANO_REFERENCIA = datetime.now().year
 
 PASTA_CARGA = Path("/opt/airflow/data/raw/ons/carga")
 PASTA_BALANCO = Path("/opt/airflow/data/raw/ons/balanco")
@@ -38,36 +38,84 @@ def executar_balanco():
     print(f"Balanço de energia processado: {resultado}")
 
 
+
 def carregar_carga_snowflake():
     arquivo = PASTA_CARGA / f"carga_{ANO_REFERENCIA}.parquet"
+
+    print(
+        f"[INICIO] Carga da curva de carga no Snowflake. "
+        f"Ano: {ANO_REFERENCIA} | Arquivo: {arquivo}"
+    )
 
     if not arquivo.exists():
         raise FileNotFoundError(
             f"Arquivo de curva de carga não encontrado: {arquivo}"
         )
 
-    conn = conectar_snowflake()
+    conn = None
 
     try:
+        conn = conectar_snowflake()
+        print("[INFO] Conexão com o Snowflake estabelecida.")
+
         carregar_carga(conn, arquivo)
+
+        print(
+            f"[SUCESSO] Curva de carga carregada no Snowflake. "
+            f"Ano: {ANO_REFERENCIA} | Arquivo: {arquivo.name}"
+        )
+
+    except Exception as erro:
+        print(
+            f"[ERRO] Falha ao carregar a curva de carga no Snowflake. "
+            f"Ano: {ANO_REFERENCIA} | Erro: {erro}"
+        )
+        raise
+
     finally:
-        conn.close()
+        if conn is not None:
+            conn.close()
+            print("[INFO] Conexão com o Snowflake encerrada.")
 
 
 def carregar_balanco_snowflake():
     arquivo = PASTA_BALANCO / f"balanco_{ANO_REFERENCIA}.parquet"
+
+    print(
+        f"[INICIO] Carga do balanço de energia no Snowflake. "
+        f"Ano: {ANO_REFERENCIA} | Arquivo: {arquivo}"
+    )
 
     if not arquivo.exists():
         raise FileNotFoundError(
             f"Arquivo de balanço não encontrado: {arquivo}"
         )
 
-    conn = conectar_snowflake()
+    conn = None
 
     try:
+        conn = conectar_snowflake()
+        print("[INFO] Conexão com o Snowflake estabelecida.")
+
         carregar_balanco(conn, arquivo)
+
+        print(
+            f"[SUCESSO] Balanço de energia carregado no Snowflake. "
+            f"Ano: {ANO_REFERENCIA} | Arquivo: {arquivo.name}"
+        )
+
+    except Exception as erro:
+        print(
+            f"[ERRO] Falha ao carregar o balanço de energia no Snowflake. "
+            f"Ano: {ANO_REFERENCIA} | Erro: {erro}"
+        )
+        raise
+
     finally:
-        conn.close()
+        if conn is not None:
+            conn.close()
+            print("[INFO] Conexão com o Snowflake encerrada.")
+
 
 def executar_dbt_build():
     comando = [
