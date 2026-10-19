@@ -27,6 +27,7 @@ services:
       - ../data:/opt/airflow/data
       - ../dbt:/opt/airflow/dbt
       - ./dbt_profiles:/opt/airflow/dbt_profiles:ro
+      - ./config:/opt/airflow/config
     ports:
       - "8080:8080"
     command: standalone
